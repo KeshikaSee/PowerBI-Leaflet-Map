@@ -46,14 +46,14 @@
         // Array to store marker coordinates for fitBounds()
         var bounds = [];
 
-        // Add Satellite Tile Layer (Esri)
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        // Add Satellite Tile Layer (Fixed HTTPS Version)
+        L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Tiles &copy; Esri, Maxar, Earthstar Geographics'
         }).addTo(map);
 
-        // Custom marker icon using a local image
+        // Custom marker icon using GitHub-hosted image
         var customIcon = L.icon({
-            iconUrl: 'mypin.png',
+            iconUrl: 'https://keshikasee.github.io/PowerBI-Leaflet-Map/mypin.png',
             iconSize: [40, 40],
             iconAnchor: [20, 40],
             popupAnchor: [0, -35]
