@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet Map in Power BI</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+        /* Ensure full screen layout without scrollbars */
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+        }
+
+        #map {
+            height: 100vh; /* Full height */
+            width: 100vw;  /* Full width */
+        }
+
+        /* Label Styling */
+        .leaflet-label {
+            font-size: 14px;
+            font-weight: bold;
+            color: red;
+            text-shadow: -1px -1px 2px white,
+                         1px -1px 2px white,
+                        -1px  1px 2px white,
+                         1px  1px 2px white;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+
+    <script>
+        var map = L.map('map'); // Initialize map without fixed center
+
+        // Array to store marker coordinates for fitBounds()
+        var bounds = [];
+
+        // Add Satellite Tile Layer (Esri)
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri, Maxar, Earthstar Geographics'
+        }).addTo(map);
+
+        // Custom marker icon using a local image
+        var customIcon = L.icon({
+            iconUrl: 'mypin.png',
+            iconSize: [40, 40],
+            iconAnchor: [20, 40],
+            popupAnchor: [0, -35]
+        });
+
+        var locations = [
+            { lat: 5.569, lon: 100.754, name: "Flat Area" },
+            { lat: 5.570, lon: 100.753, name: "Hill 1" },
+            { lat: 5.571, lon: 100.756, name: "Hill 2" },
+            { lat: 5.571, lon: 100.759, name: "Hill 3" },
+            { lat: 5.572, lon: 100.761, name: "Hill 4" },
+            { lat: 5.568, lon: 100.761, name: "Hill 5" },
+            { lat: 5.567, lon: 100.756, name: "Hill 6" }
+        ];
+
+        locations.forEach(function(loc) {
+            bounds.push([loc.lat, loc.lon]); // Add each marker position to bounds array
+
+            L.marker([loc.lat, loc.lon], { icon: customIcon }).addTo(map);
+
+            L.marker([loc.lat, loc.lon], {
+                icon: L.divIcon({
+                    className: 'leaflet-label',
+                    html: loc.name
+                })
+            }).addTo(map);
+        });
+
+        // Automatically fit the map to show all markers with padding
+        map.fitBounds(bounds, { padding: [50, 50] });
+
+    </script>
+</body>
+</html>
