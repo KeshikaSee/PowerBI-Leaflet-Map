@@ -24,18 +24,16 @@
             width: 100vw;  /* Full width */
         }
 
-        /* Label Styling - Only White Halo (No Box) */
+        /* Label Styling - Adjusted for Top-Right Position */
         .leaflet-label {
             font-size: 14px;
             font-weight: bold;
             color: red;
             text-shadow: 
                 -1px -1px 2px white, 1px -1px 2px white,
-                -1px  1px 2px white, 1px  1px 2px white,
-                -2px -2px 2px white, 2px -2px 2px white,
-                -2px  2px 2px white, 2px  2px 2px white;
+                -1px  1px 2px white, 1px  1px 2px white;
             white-space: nowrap; /* Keep text in one line */
-            text-align: center;
+            text-align: left;
             padding: 2px;
             background: none; /* Removes any background box */
             border: none; /* No border */
@@ -58,7 +56,7 @@
             attribution: 'Tiles &copy; Esri, Maxar, Earthstar Geographics'
         }).addTo(map);
 
-        // Custom marker icon using GitHub-hosted image
+        // Custom marker icon
         var customIcon = L.icon({
             iconUrl: 'https://keshikasee.github.io/PowerBI-Leaflet-Map/mypin.png',
             iconSize: [40, 40],
@@ -82,8 +80,8 @@
             // Add custom marker
             L.marker([loc.lat, loc.lon], { icon: customIcon }).addTo(map);
 
-            // Add label with only a **small white halo**, NO background box
-            L.marker([loc.lat, loc.lon], {
+            // Add label with position slightly above and to the right
+            L.marker([loc.lat + 0.0005, loc.lon + 0.0005], {
                 icon: L.divIcon({
                     className: 'leaflet-label',
                     html: `<span>${loc.name}</span>`, // Name in one line
