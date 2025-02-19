@@ -10,7 +10,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <style>
-        /* Ensure full screen layout without scrollbars */
+        /* Ensure full-screen layout without scrollbars */
         html, body {
             margin: 0;
             padding: 0;
@@ -33,6 +33,11 @@
                          1px -1px 2px white,
                         -1px  1px 2px white,
                          1px  1px 2px white;
+            white-space: nowrap;  /* Ensures text stays on one line */
+            text-align: center;  /* Aligns text to center */
+            padding: 2px 5px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -72,12 +77,15 @@
         locations.forEach(function(loc) {
             bounds.push([loc.lat, loc.lon]); // Add each marker position to bounds array
 
+            // Add custom marker
             L.marker([loc.lat, loc.lon], { icon: customIcon }).addTo(map);
 
+            // Add label with hill name & number on one line
             L.marker([loc.lat, loc.lon], {
                 icon: L.divIcon({
                     className: 'leaflet-label',
-                    html: loc.name
+                    html: `<span>${loc.name}</span>`, // Name in one line
+                    iconSize: [80, 20]
                 })
             }).addTo(map);
         });
