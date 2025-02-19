@@ -24,7 +24,7 @@
             width: 100vw;  /* Full width */
         }
 
-        /* Label Styling - Adjusted for Top-Right Position */
+        /* Label Styling - Adjusted for Better Top-Right Position */
         .leaflet-label {
             font-size: 14px;
             font-weight: bold;
@@ -80,8 +80,8 @@
             // Add custom marker
             L.marker([loc.lat, loc.lon], { icon: customIcon }).addTo(map);
 
-            // Add label with position slightly above and to the right
-            L.marker([loc.lat + 0.0005, loc.lon + 0.0005], {
+            // Adjust label position to ensure better visibility on the top-right
+            L.marker([loc.lat + 0.0006, loc.lon + 0.0008], {
                 icon: L.divIcon({
                     className: 'leaflet-label',
                     html: `<span>${loc.name}</span>`, // Name in one line
