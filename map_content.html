@@ -47,18 +47,16 @@
 
     <script>
         var map = L.map('map'); // Initialize map without fixed center
+        var bounds = []; // Store marker coordinates
 
-        // Array to store marker coordinates for fitBounds()
-        var bounds = [];
-
-        // Add Satellite Tile Layer (Fixed HTTPS Version)
+        // Add Satellite Tile Layer
         L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Tiles &copy; Esri, Maxar, Earthstar Geographics'
         }).addTo(map);
 
-        // Custom marker icon using GitHub-hosted image
+        // Custom marker icon
         var customIcon = L.icon({
-            iconUrl: 'https://keshikasee.github.io/PowerBI-Leaflet-Map/mypin.png',
+            iconUrl: 'https://keshikasee.github.io/PowerBI-Leaflet-Map/mypin.png', // Ensure it's public
             iconSize: [40, 40],
             iconAnchor: [20, 40],
             popupAnchor: [0, -35]
@@ -75,23 +73,26 @@
         ];
 
         locations.forEach(function(loc) {
-            bounds.push([loc.lat, loc.lon]); // Add each marker position to bounds array
+            bounds.push([loc.lat, loc.lon]);
 
-            // Add custom marker
+            // Add marker
             L.marker([loc.lat, loc.lon], { icon: customIcon }).addTo(map);
 
-            // Add label with hill name & number on one line
+            // Add label with single-line formatting
             L.marker([loc.lat, loc.lon], {
                 icon: L.divIcon({
                     className: 'leaflet-label',
-                    html: `<span>${loc.name}</span>`, // Name in one line
-                    iconSize: [80, 20]
+                    html: `<span>${loc.name}</span>`,
+                    iconSize: null,
+                    iconAnchor: [40, 0]
                 })
             }).addTo(map);
         });
 
-        // Automatically fit the map to show all markers with padding
-        map.fitBounds(bounds, { padding: [50, 50] });
+        // Adjust zoom & fit all markers
+        setTimeout(() => {
+            map.fitBounds(bounds, { padding: [50, 50], maxZoom: 17 });
+        }, 1000);
 
     </script>
 </body>
