@@ -46,7 +46,7 @@
     <div id="map"></div>
 
     <script>
-        var map = L.map('map'); // Initialize map without fixed center
+        var map = L.map('map').setView([5.570, 100.757], 18); // Initialize map with a zoomed-in center
 
         // Array to store marker coordinates for fitBounds()
         var bounds = [];
@@ -81,18 +81,14 @@
             L.marker([loc.lat, loc.lon], { icon: customIcon }).addTo(map);
 
             // Adjust label position to ensure better visibility higher and to the right
-            L.marker([loc.lat + 0.005, loc.lon + 0.0008], {
+            L.marker([loc.lat + 0.001, loc.lon + 0.0008], {
                 icon: L.divIcon({
                     className: 'leaflet-label',
                     html: `<span>${loc.name}</span>`, // Name in one line
-                    iconSize: [60, 20]
+                    iconSize: [80, 20]
                 })
             }).addTo(map);
         });
-
-        // Automatically fit the map to show all markers with padding
-        map.fitBounds(bounds, { padding: [50, 50] });
-
     </script>
 </body>
 </html>
