@@ -48,12 +48,12 @@
     <div id="map"></div>
 
     <script>
-        var map = L.map('map'); // Initialize map without fixed center
+        var map = L.map('map').setView([5.570, 100.757], 16); // Initialize map with a zoom level
 
         // Array to store marker coordinates for fitBounds()
         var bounds = [];
 
-        // Add Satellite Tile Layer (Fixed HTTPS Version)
+        // Add Satellite Tile Layer
         L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Tiles &copy; Esri, Maxar, Earthstar Geographics'
         }).addTo(map);
@@ -82,11 +82,11 @@
             // Add custom marker
             L.marker([loc.lat, loc.lon], { icon: customIcon }).addTo(map);
 
-            // Add label with only a **small white halo**, NO background box
+            // Add label with a small white halo (fixed syntax with backticks)
             L.marker([loc.lat, loc.lon], {
                 icon: L.divIcon({
                     className: 'leaflet-label',
-                    html: <span>${loc.name}</span>, // Name in one line
+                    html: `<span>${loc.name}</span>`, // Fixed syntax using backticks
                     iconSize: [80, 20]
                 })
             }).addTo(map);
