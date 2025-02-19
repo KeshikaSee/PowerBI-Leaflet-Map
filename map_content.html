@@ -81,11 +81,11 @@
             L.marker([loc.lat, loc.lon], { icon: customIcon }).addTo(map);
 
             // Adjust label position to ensure better visibility higher and to the right
-            L.marker([loc.lat + 0.001, loc.lon + 0.0008], {
+            L.marker([loc.lat + 0.005, loc.lon + 0.0008], {
                 icon: L.divIcon({
                     className: 'leaflet-label',
                     html: `<span>${loc.name}</span>`, // Name in one line
-                    iconSize: [80, 20]
+                    iconSize: [60, 20]
                 })
             }).addTo(map);
         });
