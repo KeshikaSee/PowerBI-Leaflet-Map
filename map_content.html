@@ -24,16 +24,18 @@
             width: 100vw;  /* Full width */
         }
 
-        /* Label Styling - Adjusted for Better Top-Right Position */
+        /* Label Styling - Only White Halo (No Box) */
         .leaflet-label {
             font-size: 14px;
             font-weight: bold;
             color: red;
             text-shadow: 
                 -1px -1px 2px white, 1px -1px 2px white,
-                -1px  1px 2px white, 1px  1px 2px white;
+                -1px  1px 2px white, 1px  1px 2px white,
+                -2px -2px 2px white, 2px -2px 2px white,
+                -2px  2px 2px white, 2px  2px 2px white;
             white-space: nowrap; /* Keep text in one line */
-            text-align: left;
+            text-align: center;
             padding: 2px;
             background: none; /* Removes any background box */
             border: none; /* No border */
@@ -46,7 +48,7 @@
     <div id="map"></div>
 
     <script>
-        var map = L.map('map').setView([5.570, 100.757], 15); // Initialize map with a zoomed-in center
+        var map = L.map('map'); // Initialize map without fixed center
 
         // Array to store marker coordinates for fitBounds()
         var bounds = [];
@@ -56,7 +58,7 @@
             attribution: 'Tiles &copy; Esri, Maxar, Earthstar Geographics'
         }).addTo(map);
 
-        // Custom marker icon
+        // Custom marker icon using GitHub-hosted image
         var customIcon = L.icon({
             iconUrl: 'https://keshikasee.github.io/PowerBI-Leaflet-Map/mypin.png',
             iconSize: [40, 40],
@@ -80,15 +82,21 @@
             // Add custom marker
             L.marker([loc.lat, loc.lon], { icon: customIcon }).addTo(map);
 
-            // Adjust label position to ensure better visibility higher and to the right
-            L.marker([loc.lat + 0.001, loc.lon + 0.0008], {
+            // Add label with only a **small white halo**, NO background box
+            L.marker([loc.lat, loc.lon], {
                 icon: L.divIcon({
                     className: 'leaflet-label',
-                    html: `<span>${loc.name}</span>`, // Name in one line
+                    html: <span>${loc.name}</span>, // Name in one line
                     iconSize: [80, 20]
                 })
             }).addTo(map);
         });
+
+        // Automatically fit the map to show all markers with padding
+        map.fitBounds(bounds, { padding: [50, 50] });
+
     </script>
 </body>
 </html>
+
+this is my code for the map, i want the labels to be on the top slight left instead at the button.
