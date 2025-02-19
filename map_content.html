@@ -24,7 +24,7 @@
             width: 100vw;  /* Full width */
         }
 
-        /* Label Styling */
+        /* Label Styling - Remove Bounding Box */
         .leaflet-label {
             font-size: 14px;
             font-weight: bold;
@@ -33,11 +33,11 @@
                          1px -1px 2px white,
                         -1px  1px 2px white,
                          1px  1px 2px white;
-            white-space: nowrap;  /* Ensures text stays on one line */
+            white-space: nowrap; /* Ensures text stays on one line */
             text-align: center;  /* Aligns text to center */
-            padding: 2px 5px;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 5px;
+            padding: 0px;
+            background: none;  /* Removes the box */
+            border-radius: 0px;  /* Ensures no rounded corners */
         }
     </style>
 </head>
@@ -47,16 +47,18 @@
 
     <script>
         var map = L.map('map'); // Initialize map without fixed center
-        var bounds = []; // Store marker coordinates
 
-        // Add Satellite Tile Layer
+        // Array to store marker coordinates for fitBounds()
+        var bounds = [];
+
+        // Add Satellite Tile Layer (Fixed HTTPS Version)
         L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Tiles &copy; Esri, Maxar, Earthstar Geographics'
         }).addTo(map);
 
-        // Custom marker icon
+        // Custom marker icon using GitHub-hosted image
         var customIcon = L.icon({
-            iconUrl: 'https://keshikasee.github.io/PowerBI-Leaflet-Map/mypin.png', // Ensure it's public
+            iconUrl: 'https://keshikasee.github.io/PowerBI-Leaflet-Map/mypin.png',
             iconSize: [40, 40],
             iconAnchor: [20, 40],
             popupAnchor: [0, -35]
@@ -73,26 +75,23 @@
         ];
 
         locations.forEach(function(loc) {
-            bounds.push([loc.lat, loc.lon]);
+            bounds.push([loc.lat, loc.lon]); // Add each marker position to bounds array
 
-            // Add marker
+            // Add custom marker
             L.marker([loc.lat, loc.lon], { icon: customIcon }).addTo(map);
 
-            // Add label with single-line formatting
+            // Add label with hill name & number on one line (NO BOUNDING BOX)
             L.marker([loc.lat, loc.lon], {
                 icon: L.divIcon({
                     className: 'leaflet-label',
-                    html: `<span>${loc.name}</span>`,
-                    iconSize: null,
-                    iconAnchor: [40, 0]
+                    html: `<span>${loc.name}</span>`, // Name in one line
+                    iconSize: [80, 20]
                 })
             }).addTo(map);
         });
 
-        // Adjust zoom & fit all markers
-        setTimeout(() => {
-            map.fitBounds(bounds, { padding: [50, 50], maxZoom: 17 });
-        }, 1000);
+        // Automatically fit the map to show all markers with padding
+        map.fitBounds(bounds, { padding: [50, 50] });
 
     </script>
 </body>
