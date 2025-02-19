@@ -24,20 +24,22 @@
             width: 100vw;  /* Full width */
         }
 
-        /* Label Styling - Remove Bounding Box */
+        /* Label Styling - Only White Halo (No Box) */
         .leaflet-label {
             font-size: 14px;
             font-weight: bold;
             color: red;
-            text-shadow: -1px -1px 2px white,
-                         1px -1px 2px white,
-                        -1px  1px 2px white,
-                         1px  1px 2px white;
-            white-space: nowrap; /* Ensures text stays on one line */
-            text-align: center;  /* Aligns text to center */
-            padding: 0px;
-            background: none;  /* Removes the box */
-            border-radius: 0px;  /* Ensures no rounded corners */
+            text-shadow: 
+                -1px -1px 2px white, 1px -1px 2px white,
+                -1px  1px 2px white, 1px  1px 2px white,
+                -2px -2px 2px white, 2px -2px 2px white,
+                -2px  2px 2px white, 2px  2px 2px white;
+            white-space: nowrap; /* Keep text in one line */
+            text-align: center;
+            padding: 2px;
+            background: none; /* Removes any background box */
+            border: none; /* No border */
+            border-radius: 0px; /* Ensures no rounded corners */
         }
     </style>
 </head>
@@ -80,7 +82,7 @@
             // Add custom marker
             L.marker([loc.lat, loc.lon], { icon: customIcon }).addTo(map);
 
-            // Add label with hill name & number on one line (NO BOUNDING BOX)
+            // Add label with only a **small white halo**, NO background box
             L.marker([loc.lat, loc.lon], {
                 icon: L.divIcon({
                     className: 'leaflet-label',
